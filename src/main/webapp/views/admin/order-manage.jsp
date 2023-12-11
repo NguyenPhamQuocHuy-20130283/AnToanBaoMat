@@ -37,7 +37,7 @@
         <div class="page-content">
             <div class="page-header clearfix">
                 <h1 class="pull-left">
-                    Tài khoản
+                   Hoá đơn
                 </h1>
             </div><!-- /.page-header -->
 
@@ -190,8 +190,10 @@
             $("#message_box").fadeTo(2000, 500).slideUp(500, function () {
                 $("#message_box").slideUp(500);
             });
+
         }
     })
+
 </script>
 <script src='<c:url value="/assets/js/validation.js"/>'></script>
 </body>

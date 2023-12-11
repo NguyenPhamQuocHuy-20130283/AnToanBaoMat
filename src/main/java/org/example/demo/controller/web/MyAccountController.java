@@ -124,12 +124,15 @@ public class MyAccountController extends HttpServlet {
                     SignService.add(sign);
 
                     PrivateKey privateKey = key.getPri();
+                    PublicKey publicKey1 = key.getPub();
                     String privateKeyBase64 = Base64.getEncoder().encodeToString(privateKey.getEncoded());
+                    String publicKeyBase64 = Base64.getEncoder().encodeToString(publicKey1.getEncoded());
                     JSONObject json = new JSONObject();
                     json.put("userName", account.getUsername());
                     json.put("email", account.getEmail());
                     json.put("phone", account.getPhone());
                     json.put("privateKey", privateKeyBase64);
+                    json.put("publicKey", publicKeyBase64);
                     json.put("keySize", 1024);
 
                     String signUrl = request.getServletContext().getRealPath("\\sign");

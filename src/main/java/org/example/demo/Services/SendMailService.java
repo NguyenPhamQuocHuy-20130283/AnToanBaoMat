@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Properties;
 
 public class SendMailService implements Serializable {
-    private static final String username = "20130271@st.hcmuaf.edu.vn";
-    private static final String password = "0904934034";
+    private static final String username = "chung41901@gmail.com";
+    private static final String password = "cilqommsedbazdxx";
 
     public SendMailService() {
     }
@@ -42,5 +42,18 @@ public class SendMailService implements Serializable {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        //test send mail
+        String toEmail = "20130283@st.hcmuaf.edu.vn";
+        String subject = "Test send mail";
+        String msg = "Hello, this is a test mail";
+
+        if (sendMail(toEmail, subject, msg)) {
+            System.out.println("Send mail success");
+        } else {
+            System.out.println("Send mail fail");
+        }
     }
 }

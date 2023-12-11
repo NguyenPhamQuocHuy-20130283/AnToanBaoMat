@@ -21,7 +21,7 @@ public class RegisterService {
                     newAccount.setRole(RoleDao.findOneByName("USER"));
                     newAccount.setStatus(StatusDao.findOneByCode("UNVALIDATE"));
                     long id = AccountDao.add(newAccount);
-                    String link = "http://localhost:8080/WebBanQuanAo/confirm?id=" + id + "&token=" + validateToken;
+                    String link = "http://localhost:8080/confirm?id=" + id + "&token=" + validateToken;
                     SendMailService.sendMail(newAccount.getEmail(), "Xac thuc dang ky", link);
                     return 0;
                 } else {
@@ -45,7 +45,7 @@ public class RegisterService {
             if (account.getStatus().getCode().equalsIgnoreCase("UNVALIDATE")) {
                 Timestamp createDate = account.getCreatedDate();
                 //Kiểm tra thời gian đăng ký có quá thời gian hiện tại trừ đi 24 tiếng hay không nếu có là sai ngc lại là đúng
-                boolean checkExpires = createDate.after(Timestamp.valueOf(LocalDateTime.now().minus(1, ChronoUnit.DAYS)));
+                boolean checkExpires = createDate.after(Timestamp.valueOf(LocalDateTime.now().minusDays(1)));
                 if (!checkExpires) {
                     AccountDao.delete(account.getId());
                     result = false;
@@ -64,7 +64,7 @@ public class RegisterService {
             if (account.getStatus().getCode().equalsIgnoreCase("UNVALIDATE")) {
                 Timestamp createDate = account.getCreatedDate();
                 //Kiểm tra thời gian đăng ký có quá thời gian hiện tại trừ đi 24 tiếng hay không
-                boolean checkExpires = createDate.after(Timestamp.valueOf(LocalDateTime.now().minus(1, ChronoUnit.DAYS)));
+                boolean checkExpires = createDate.after(Timestamp.valueOf(LocalDateTime.now().minusDays(1)));
                 if (!checkExpires) {
                     AccountDao.delete(account.getId());
                     result = false;
@@ -78,7 +78,7 @@ public class RegisterService {
         Account account = AccountDao.findOneByIdAndValidateToken(id, token);
         if (account == null) return false;
         if (account.getStatus().getCode().equalsIgnoreCase("UNVALIDATE")) {
-            boolean checkExpires = account.getCreatedDate().after(Timestamp.valueOf(LocalDateTime.now().minus(1, ChronoUnit.DAYS)));
+            boolean checkExpires = account.getCreatedDate().after(Timestamp.valueOf(LocalDateTime.now().minusDays(1)));
             if (!checkExpires) {
                 return false;
             } else {
