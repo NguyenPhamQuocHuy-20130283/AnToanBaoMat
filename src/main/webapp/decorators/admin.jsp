@@ -109,7 +109,7 @@
         </button>
 
         <div class="navbar-header pull-left">
-            <a href="dash-board" class="navbar-brand">
+            <a href="admin-dash-board" class="navbar-brand">
                 <small>
                     <i class="fa fa-leaf"></i>
                     Admin WBH
