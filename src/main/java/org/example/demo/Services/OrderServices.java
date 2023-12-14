@@ -4,6 +4,7 @@ import org.example.demo.dao.OrderItemDao;
 import org.example.demo.model.*;
 import org.example.demo.dao.OrderDao;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +53,12 @@ public class OrderServices {
 
     public static boolean updateStatus(Order order) {
         return OrderDao.update(order);
+    }
+
+    public static void main(String[] args) {
+        //test file exist
+        File file = new File("C:\\xampp\\apache-tomcat-9.0.83\\webapps\\ROOT\\orders\\upload/order-11.pdf");
+        System.out.println(file.exists());
     }
 
 }

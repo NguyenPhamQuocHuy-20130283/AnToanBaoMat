@@ -14,4 +14,5 @@ public class SignService {
     public static long add(Sign sign) {
         return SignDao.add(sign);
     }
+
 }

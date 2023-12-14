@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(name = "SignController", value = "/sign")
 @MultipartConfig()
@@ -56,11 +57,28 @@ public class SignController extends HttpServlet {
         Cart cart = (Cart) session.getAttribute("cart");
         Sign sign = SignService.getSignWithAccountAndIsActive(account, true);
 
-        long orderId = Long.parseLong(request.getParameter("orderId"));
-        Part orderPdf = request.getPart("order-pdf");
-        String readPath = request.getServletContext().getRealPath("/orders/upload");
-        String fileName = "order-" + orderId + ".pdf";
+        String orderIdParam = request.getParameter("orderId");
+        long orderId;
+        if (orderIdParam != null) {
+            try {
+                orderId = Long.parseLong(orderIdParam);
+            } catch (NumberFormatException e) {
+                // Handle the case where orderIdParam is not a valid long number
+                // For example, you could set a default value or return an error response
+                Logger.getLogger(SignController.class.getName()).warning(e.getMessage());
+                return;
+            }
+        } else {
+            // Handle the case where the "orderId" parameter is missing
+            // For example, you could set a default value or return an error response
+            System.out.println("orderId is missing");
+            return;
+        }
 
+        Part orderPdf = request.getPart("order-pdf");
+        String readPath = request.getServletContext().getRealPath("\\orders\\upload");
+        String fileName = "order-" + orderId + ".pdf";
+        System.out.println(readPath + "/" + fileName);
         String message = "";
         // neu chua co chu ky
         if (sign == null) {
@@ -71,7 +89,7 @@ public class SignController extends HttpServlet {
                 folder.mkdir();
             }
             orderPdf.write(readPath + "/" + fileName);
-            FileUtil.copyFile(readPath + "/" + fileName, "E:\\GocHocTap\\intellij\\Antoanbaomathttt\\WebBanQuanAo\\src\\main\\webapp\\orders\\upload\\order-" + orderId + ".pdf", false);
+            FileUtil.copyFile(readPath + "/" + fileName, "D:\\webHomework\\demo\\src\\main\\webapp\\orders\\upload\\order-" + orderId + ".pdf", false);
 
             String orderNoSignUrl = request.getServletContext().getRealPath("/orders/download/order-" + orderId + ".pdf");
             String orderSignUrl = readPath + "/" + fileName;
@@ -88,6 +106,7 @@ public class SignController extends HttpServlet {
                     CartService.clear(cart);
                     Order order = OrderServices.getOrder(orderId);
                     order.setStatus(StatusService.getStatusByName("VERIFY"));
+                    System.out.println(order);
                     OrderServices.updateStatus(order);
                     cart = CartService.getCart(account);
                     session.setAttribute("cart", cart);
@@ -96,6 +115,7 @@ public class SignController extends HttpServlet {
                     message = "Thanh toán thất bại chữ ký không đúng";
                 }
             } catch (Exception e) {
+                Logger.getLogger(SignController.class.getName()).warning(e.getMessage());
                 message = "Chữ ký sai không thể xác thực";
             }
         }

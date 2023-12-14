@@ -59,4 +59,16 @@ public class Order extends ModelParent implements Serializable {
     public void setItems(List<OrderItem> items) {
         this.items = items;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "account=" + account +
+                ", recipient='" + recipient + '\'' +
+                ", orderPhone='" + orderPhone + '\'' +
+                ", orderAddress='" + orderAddress + '\'' +
+                ", status=" + status +
+                ", items=" + items +
+                '}';
+    }
 }

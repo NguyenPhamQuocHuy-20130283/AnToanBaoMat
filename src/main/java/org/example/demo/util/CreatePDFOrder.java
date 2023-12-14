@@ -112,7 +112,7 @@ public class CreatePDFOrder {
 
             // đóng file
             document.close();
-            FileUtil.copyFile(fileUrl, "E:\\GocHocTap\\intellij\\Antoanbaomathttt\\WebBanQuanAo\\src\\main\\webapp\\orders\\download\\" + filename + ".pdf", false);
+            FileUtil.copyFile(fileUrl, "D:\\webHomework\\demo\\src\\main\\webapp\\orders\\download\\" + filename + ".pdf", false);
 //            FileUtil.copyFile(orderUrl, "E:\\GocHocTap\\intellij\\Antoanbaomathttt\\WebBanQuanAo\\src\\main\\webapp\\orders\\download\\order-" + order.getId() + ".pdf", false);
 
         } catch (DocumentException e) {
